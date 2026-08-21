@@ -17,6 +17,9 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname === '/api/content' && request.method === 'GET') return json(await content(env));
+    if (url.pathname === '/api/admin/session' && request.method === 'POST') {
+      return authorized(request, env) ? json({ ok: true }) : json({ error: 'Mot de passe incorrect' }, 401);
+    }
     if (url.pathname === '/api/admin/content' && request.method === 'PUT') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
       const entries = await request.json<Record<string, string>>();
