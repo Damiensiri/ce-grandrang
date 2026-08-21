@@ -5,7 +5,8 @@ const allowedImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 function authorized(request: Request, env: Env) {
   const token = request.headers.get('authorization');
-  return typeof env.ADMIN_PASSWORD === 'string' && env.ADMIN_PASSWORD.length >= 12 && token === `Bearer ${env.ADMIN_PASSWORD}`;
+  const password = env.ADMIN_PASSWORD?.trim();
+  return typeof password === 'string' && password.length >= 12 && token === `Bearer ${password}`;
 }
 
 async function content(env: Env) {
