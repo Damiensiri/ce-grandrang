@@ -1,0 +1,1 @@
+ALTER TABLE pages ADD COLUMN external_url TEXT NOT NULL DEFAULT '';
