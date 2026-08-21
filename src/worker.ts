@@ -21,7 +21,7 @@ export default {
       return json((await env.DB.prepare('SELECT slug, menu_label, menu_group FROM pages WHERE published = 1 AND show_on_site = 1 AND show_in_menu = 1 ORDER BY position, menu_label').all()).results);
     }
     if (url.pathname.startsWith('/api/pages/') && request.method === 'GET') {
-      const page = await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body, image_url, sections FROM pages WHERE slug = ? AND published = 1 AND show_on_site = 1').bind(url.pathname.slice(11)).first();
+      const page = await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body, secondary_body, image_url, sections FROM pages WHERE slug = ? AND published = 1 AND show_on_site = 1').bind(url.pathname.slice(11)).first();
       return page ? json(page) : json({ error: 'Page introuvable' }, 404);
     }
     if (url.pathname === '/api/admin/session' && request.method === 'POST') {
@@ -29,7 +29,7 @@ export default {
     }
     if (url.pathname === '/api/admin/pages' && request.method === 'GET') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
-      return json((await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body, image_url, sections, position, show_in_menu, show_on_site, menu_group FROM pages ORDER BY position, menu_label').all()).results);
+      return json((await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body, secondary_body, image_url, sections, position, show_in_menu, show_on_site, menu_group FROM pages ORDER BY position, menu_label').all()).results);
     }
     if (url.pathname === '/api/admin/pages' && request.method === 'POST') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
@@ -37,13 +37,13 @@ export default {
       if (!/^[a-z0-9-]{2,60}$/.test(slug)) return json({ error: 'Adresse invalide : lettres minuscules, chiffres et tirets.' }, 400);
       if (await env.DB.prepare('SELECT slug FROM pages WHERE slug=?').bind(slug).first()) return json({ error: 'Cette adresse est déjà utilisée.' }, 409);
       const max = await env.DB.prepare('SELECT COALESCE(MAX(position), 0) AS position FROM pages').first<{ position: number }>();
-      await env.DB.prepare('INSERT INTO pages (slug, menu_label, eyebrow, title, introduction, body, image_url, sections, position, show_in_menu, show_on_site, menu_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(slug, p.menu_label || 'Nouvelle page', p.eyebrow || '', p.title || 'Nouvelle page', p.introduction || '', p.body || '', p.image_url || '', '[]', Number(max?.position || 0) + 10, 1, 1, p.menu_group || '').run();
+      await env.DB.prepare('INSERT INTO pages (slug, menu_label, eyebrow, title, introduction, body, secondary_body, image_url, sections, position, show_in_menu, show_on_site, menu_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(slug, p.menu_label || 'Nouvelle page', p.eyebrow || '', p.title || 'Nouvelle page', p.introduction || '', p.body || '', p.secondary_body || '', p.image_url || '', '[]', Number(max?.position || 0) + 10, 1, 1, p.menu_group || '').run();
       return json({ ok: true, slug }, 201);
     }
     if (url.pathname.startsWith('/api/admin/pages/') && request.method === 'PUT') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
       const p = await request.json<Record<string, string>>();
-      await env.DB.prepare('UPDATE pages SET menu_label=?, eyebrow=?, title=?, introduction=?, body=?, image_url=?, sections=?, position=?, show_in_menu=?, show_on_site=?, menu_group=? WHERE slug=?').bind(p.menu_label, p.eyebrow, p.title, p.introduction, p.body, p.image_url || '', p.sections || '[]', Number(p.position)||0, Number(p.show_in_menu)||0, Number(p.show_on_site)||0, p.menu_group||'', url.pathname.slice(17)).run();
+      await env.DB.prepare('UPDATE pages SET menu_label=?, eyebrow=?, title=?, introduction=?, body=?, secondary_body=?, image_url=?, sections=?, position=?, show_in_menu=?, show_on_site=?, menu_group=? WHERE slug=?').bind(p.menu_label, p.eyebrow, p.title, p.introduction, p.body, p.secondary_body || '', p.image_url || '', p.sections || '[]', Number(p.position)||0, Number(p.show_in_menu)||0, Number(p.show_on_site)||0, p.menu_group||'', url.pathname.slice(17)).run();
       return json({ ok: true });
     }
     if (url.pathname === '/api/admin/content' && request.method === 'PUT') {

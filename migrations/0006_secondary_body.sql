@@ -1,0 +1,1 @@
+ALTER TABLE pages ADD COLUMN secondary_body TEXT NOT NULL DEFAULT '';

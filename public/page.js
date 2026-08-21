@@ -5,6 +5,7 @@ const slug=location.pathname.split('/').filter(Boolean).pop();
 fetch(`/api/pages/${slug}`).then(r=>r.json()).then(p=>{
   document.title=`${p.menu_label} · Grand Rang`;
   for(const k of ['eyebrow','title','introduction','body'])document.getElementById(k).textContent=p[k]||'';
+  if(p.secondary_body&&p.secondary_body.trim()){const secondary=document.createElement('section');secondary.className='page-body';secondary.style.paddingTop='0';secondary.textContent=p.secondary_body;document.querySelector('#body').after(secondary)}
   const hero=document.querySelector('.page-hero');if(p.image_url)hero.style.background=`linear-gradient(90deg,#032e5dcc,#032e5d66),url("${p.image_url}") center/cover`;
   let sections=[];try{sections=JSON.parse(p.sections||'[]')}catch{}
   document.querySelector('#sections').innerHTML=sections.map(s=>{
