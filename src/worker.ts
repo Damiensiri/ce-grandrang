@@ -1,7 +1,6 @@
 export interface Env { ASSETS: Fetcher; DB: D1Database; MEDIA: R2Bucket; ADMIN_PASSWORD: string; }
 
 const json = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'no-store' } });
-const allowedImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 function authorized(request: Request, env: Env) {
   const token = request.headers.get('authorization');
@@ -57,7 +56,7 @@ export default {
     if (url.pathname === '/api/admin/media' && request.method === 'POST') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
       const form = await request.formData(); const file = form.get('file');
-      if (!(file instanceof File) || !allowedImageTypes.has(file.type) || file.size > 8 * 1024 * 1024) return json({ error: 'Image JPG, PNG ou WebP de moins de 8 Mo requise.' }, 400);
+      if (!(file instanceof File) || !file.type.startsWith('image/') || file.size > 25 * 1024 * 1024) return json({ error: 'Image requise, maximum 25 Mo.' }, 400);
       const extension = file.type.split('/')[1]; const key = `uploads/${crypto.randomUUID()}.${extension}`;
       await env.MEDIA.put(key, file.stream(), { httpMetadata: { contentType: file.type } });
       return json({ url: `/media/${key}` }, 201);
