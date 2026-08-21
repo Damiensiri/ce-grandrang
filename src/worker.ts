@@ -1,5 +1,7 @@
 export interface Env { ASSETS: Fetcher; DB: D1Database; MEDIA: R2Bucket; ADMIN_PASSWORD: string; }
 
+const contactEndpoint = 'https://script.google.com/macros/s/AKfycbye9MNIH8oasKx1AbNl-sfKkf8HA1lyBQua4VfLeNm288heyocfZ4Op7u-je4U2n-9y/exec';
+
 const json = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'no-store' } });
 
 function authorized(request: Request, env: Env) {
@@ -26,6 +28,12 @@ export default {
     }
     if (url.pathname === '/api/admin/session' && request.method === 'POST') {
       return authorized(request, env) ? json({ ok: true }) : json({ error: 'Mot de passe incorrect' }, 401);
+    }
+    if (url.pathname === '/api/contact' && request.method === 'POST') {
+      const payload = await request.json<Record<string, string>>();
+      if (payload.website || !payload.nom?.trim() || !payload.email?.trim() || !payload.message?.trim()) return json({ error: 'Merci de remplir les champs obligatoires.' }, 400);
+      const response = await fetch(contactEndpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload), redirect: 'follow' });
+      return response.ok ? json({ ok: true }) : json({ error: 'Envoi impossible pour le moment.' }, 502);
     }
     if (url.pathname === '/api/admin/pages' && request.method === 'GET') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
