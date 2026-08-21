@@ -69,7 +69,10 @@ export default {
     }
     if (request.method === 'GET' && /^\/[a-z0-9-]+$/.test(url.pathname)) {
       const page = await env.DB.prepare('SELECT slug FROM pages WHERE slug=? AND published=1 AND show_on_site=1').bind(url.pathname.slice(1)).first();
-      if (page) return env.ASSETS.fetch(new Request(new URL('/page.html', url), request));
+      if (page) {
+        const template = await env.ASSETS.fetch(new Request(new URL('/page-template.txt', url), request));
+        return new Response(template.body, { headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store' } });
+      }
     }
     return env.ASSETS.fetch(request);
   }
