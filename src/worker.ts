@@ -18,8 +18,11 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname === '/api/content' && request.method === 'GET') return json(await content(env));
+    if (url.pathname === '/api/menu' && request.method === 'GET') {
+      return json((await env.DB.prepare('SELECT slug, menu_label, menu_group FROM pages WHERE published = 1 AND show_on_site = 1 AND show_in_menu = 1 ORDER BY position, menu_label').all()).results);
+    }
     if (url.pathname.startsWith('/api/pages/') && request.method === 'GET') {
-      const page = await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body FROM pages WHERE slug = ? AND published = 1 AND show_on_site = 1').bind(url.pathname.slice(11)).first();
+      const page = await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body, image_url FROM pages WHERE slug = ? AND published = 1 AND show_on_site = 1').bind(url.pathname.slice(11)).first();
       return page ? json(page) : json({ error: 'Page introuvable' }, 404);
     }
     if (url.pathname === '/api/admin/session' && request.method === 'POST') {
@@ -27,12 +30,21 @@ export default {
     }
     if (url.pathname === '/api/admin/pages' && request.method === 'GET') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
-      return json((await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body, position, show_in_menu, show_on_site, menu_group FROM pages ORDER BY position').all()).results);
+      return json((await env.DB.prepare('SELECT slug, menu_label, eyebrow, title, introduction, body, image_url, position, show_in_menu, show_on_site, menu_group FROM pages ORDER BY position, menu_label').all()).results);
+    }
+    if (url.pathname === '/api/admin/pages' && request.method === 'POST') {
+      if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
+      const p = await request.json<Record<string, string>>(); const slug = String(p.slug || '').toLowerCase().trim();
+      if (!/^[a-z0-9-]{2,60}$/.test(slug)) return json({ error: 'Adresse invalide : lettres minuscules, chiffres et tirets.' }, 400);
+      if (await env.DB.prepare('SELECT slug FROM pages WHERE slug=?').bind(slug).first()) return json({ error: 'Cette adresse est déjà utilisée.' }, 409);
+      const max = await env.DB.prepare('SELECT COALESCE(MAX(position), 0) AS position FROM pages').first<{ position: number }>();
+      await env.DB.prepare('INSERT INTO pages (slug, menu_label, eyebrow, title, introduction, body, image_url, position, show_in_menu, show_on_site, menu_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(slug, p.menu_label || 'Nouvelle page', p.eyebrow || '', p.title || 'Nouvelle page', p.introduction || '', p.body || '', p.image_url || '', Number(max?.position || 0) + 10, 1, 1, p.menu_group || '').run();
+      return json({ ok: true, slug }, 201);
     }
     if (url.pathname.startsWith('/api/admin/pages/') && request.method === 'PUT') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
       const p = await request.json<Record<string, string>>();
-      await env.DB.prepare('UPDATE pages SET menu_label=?, eyebrow=?, title=?, introduction=?, body=?, position=?, show_in_menu=?, show_on_site=?, menu_group=? WHERE slug=?').bind(p.menu_label, p.eyebrow, p.title, p.introduction, p.body, Number(p.position)||0, Number(p.show_in_menu)||0, Number(p.show_on_site)||0, p.menu_group||'', url.pathname.slice(17)).run();
+      await env.DB.prepare('UPDATE pages SET menu_label=?, eyebrow=?, title=?, introduction=?, body=?, image_url=?, position=?, show_in_menu=?, show_on_site=?, menu_group=? WHERE slug=?').bind(p.menu_label, p.eyebrow, p.title, p.introduction, p.body, p.image_url || '', Number(p.position)||0, Number(p.show_in_menu)||0, Number(p.show_on_site)||0, p.menu_group||'', url.pathname.slice(17)).run();
       return json({ ok: true });
     }
     if (url.pathname === '/api/admin/content' && request.method === 'PUT') {
@@ -55,7 +67,10 @@ export default {
       if (!object) return new Response('Image introuvable', { status: 404 });
       return new Response(object.body, { headers: { 'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream', 'Cache-Control': 'public, max-age=31536000, immutable' } });
     }
-    if (request.method === 'GET' && /^\/(cours|stages|balades|demi-pensions|pensions|prestations|challenge-hivernal|contact)$/.test(url.pathname)) return env.ASSETS.fetch(new Request(new URL('/page.html', url), request));
+    if (request.method === 'GET' && /^\/[a-z0-9-]+$/.test(url.pathname)) {
+      const page = await env.DB.prepare('SELECT slug FROM pages WHERE slug=? AND published=1 AND show_on_site=1').bind(url.pathname.slice(1)).first();
+      if (page) return env.ASSETS.fetch(new Request(new URL('/page.html', url), request));
+    }
     return env.ASSETS.fetch(request);
   }
 } satisfies ExportedHandler<Env>;
