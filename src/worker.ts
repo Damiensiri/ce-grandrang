@@ -57,7 +57,7 @@ export default {
     if (url.pathname === '/api/admin/content' && request.method === 'PUT') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
       const entries = await request.json<Record<string, string>>();
-      const statements = Object.entries(entries).filter(([key, value]) => key.startsWith('hero.') && typeof value === 'string').map(([key, value]) => env.DB.prepare('INSERT INTO site_content (content_key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(content_key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP').bind(key, value.trim()));
+      const statements = Object.entries(entries).filter(([key, value]) => /^(hero|news)\./.test(key) && typeof value === 'string').map(([key, value]) => env.DB.prepare('INSERT INTO site_content (content_key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(content_key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP').bind(key, value.trim()));
       if (statements.length) await env.DB.batch(statements);
       return json(await content(env));
     }
