@@ -1,0 +1,28 @@
+.seasonal-decor{--seasonal-anchor:86px;position:fixed;inset:0;z-index:12;pointer-events:none;overflow:hidden;contain:layout style paint;isolation:isolate}
+html[data-season] body>header,html[data-season] body>.news,html[data-season] .hero>*,html[data-season] .page-hero>*,html[data-season] .page-body,html[data-season] .page-sections,html[data-season] .contact-grid,html[data-season] body>footer{position:relative;z-index:20}
+.seasonal-corner{position:absolute;top:var(--seasonal-anchor);width:clamp(190px,21vw,330px);height:clamp(145px,18vw,245px);background:url('/seasonal/christmas-corner.svg') left top/contain no-repeat;filter:drop-shadow(0 9px 10px rgba(6,55,52,.2));opacity:.98}
+.seasonal-corner--left{left:-34px}
+.seasonal-corner--right{right:-34px;transform:scaleX(-1)}
+.seasonal-garland{position:absolute;top:var(--seasonal-anchor);left:16%;right:16%;height:48px;border-top:2px solid rgba(41,79,54,.76);border-radius:50%}
+.seasonal-garland i{position:absolute;left:var(--light-left);top:var(--light-drop);width:8px;height:12px;border-radius:55% 55% 65% 65%;background:#ffd88a;box-shadow:0 0 6px #ffd88a,0 0 14px rgba(255,182,72,.8);transform:rotate(8deg);animation:seasonal-glow 2.8s ease-in-out infinite;animation-delay:var(--light-delay)}
+.seasonal-garland i:nth-child(3n){background:#fff0be;box-shadow:0 0 7px #fff0be,0 0 15px rgba(255,209,112,.75)}
+.seasonal-ornament{position:absolute;top:calc(var(--seasonal-anchor) + 36px);width:2px;height:78px;background:linear-gradient(#d8c79a,#b79b5b);transform-origin:top}
+.seasonal-ornament:before{content:"";position:absolute;left:-3px;bottom:14px;width:8px;height:7px;border:1px solid #bd9850;border-bottom:0;border-radius:5px 5px 0 0}
+.seasonal-ornament i{position:absolute;left:-12px;bottom:-8px;width:26px;height:31px;border-radius:48% 48% 52% 52%;background:radial-gradient(circle at 34% 28%,#fff7db 0 7%,#c02f35 9% 45%,#7c121e 76%);box-shadow:0 5px 11px rgba(31,31,28,.22),inset -4px -5px 8px rgba(73,5,13,.25)}
+.seasonal-ornament i:after{content:"";position:absolute;inset:8px 5px;border-top:1px solid rgba(255,229,157,.85);border-bottom:1px solid rgba(255,229,157,.7);border-radius:50%}
+.seasonal-ornament--left{left:clamp(152px,18vw,275px);animation:seasonal-sway 5.6s ease-in-out infinite}
+.seasonal-ornament--right{right:clamp(154px,18vw,278px);height:61px;animation:seasonal-sway 6.2s ease-in-out infinite reverse}
+.seasonal-ornament--right i{background:radial-gradient(circle at 34% 28%,#fff9df 0 7%,#d4af57 9% 44%,#88702e 78%)}
+.seasonal-decor--inner .seasonal-corner{width:clamp(170px,17vw,260px);height:clamp(125px,15vw,205px);opacity:.9}
+.seasonal-decor--inner .seasonal-garland{left:20%;right:20%;opacity:.86}
+.seasonal-decor--inner .seasonal-ornament--left{left:clamp(96px,9vw,140px)}
+.seasonal-decor--inner .seasonal-ornament--right{right:clamp(98px,9vw,142px)}
+.seasonal-snow{position:absolute;inset:var(--seasonal-anchor) 0 0;mask-image:linear-gradient(to bottom,transparent 0,#000 12%,#000 78%,transparent 100%)}
+.seasonal-snow i{position:absolute;top:-12px;left:var(--flake-column);width:var(--flake-size);height:var(--flake-size);border-radius:50%;background:rgba(255,255,255,.78);box-shadow:0 0 4px rgba(255,255,255,.58);animation:seasonal-snowfall var(--flake-duration) linear infinite;animation-delay:var(--flake-delay)}
+@keyframes seasonal-glow{0%,100%{opacity:.72;filter:brightness(.9)}50%{opacity:1;filter:brightness(1.16)}}
+@keyframes seasonal-sway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+@keyframes seasonal-snowfall{0%{transform:translate3d(0,-4vh,0);opacity:0}8%{opacity:.75}92%{opacity:.55}100%{transform:translate3d(var(--flake-drift),105vh,0);opacity:0}}
+@media(max-width:700px){.seasonal-decor{--seasonal-anchor:72px;z-index:12}.seasonal-corner{width:132px;height:106px;opacity:.92}.seasonal-corner--left{left:-28px}.seasonal-corner--right{right:-30px}.seasonal-garland{left:24%;right:24%;height:30px;opacity:.72}.seasonal-garland i{width:6px;height:9px}.seasonal-garland i:nth-child(even){display:none}.seasonal-ornament{top:calc(var(--seasonal-anchor) + 23px);height:48px}.seasonal-ornament--left{left:102px}.seasonal-ornament--right{right:101px;height:39px}.seasonal-ornament i{left:-8px;width:18px;height:21px}.seasonal-ornament:before{bottom:7px}.seasonal-snow{display:none}}
+@media(max-width:700px){.seasonal-decor--inner .seasonal-corner{width:108px;height:88px;opacity:.86}.seasonal-decor--inner .seasonal-garland{left:27%;right:27%;opacity:.62}.seasonal-decor--inner .seasonal-ornament{display:none}}
+@media(prefers-reduced-motion:reduce){.seasonal-garland i,.seasonal-ornament,.seasonal-snow i{animation:none}.seasonal-snow{display:none}}
+@media(forced-colors:active){.seasonal-decor{display:none}}
