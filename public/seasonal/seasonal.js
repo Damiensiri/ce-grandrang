@@ -44,8 +44,9 @@
         <div class="seasonal-corner-branch seasonal-corner-branch--right"></div>
         <div class="seasonal-edge-lights seasonal-edge-lights--left"></div>
         <div class="seasonal-edge-lights seasonal-edge-lights--right"></div>
+        <div class="seasonal-warm-bokeh"></div>
         <div class="seasonal-lantern"></div>
-        <div class="seasonal-bottom-garland"></div>
+        <div class="seasonal-fence-right"></div>
         <div class="seasonal-snow" aria-hidden="true">
           ${snowflakes}
         </div>`;
