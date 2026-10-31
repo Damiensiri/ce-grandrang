@@ -1,0 +1,6 @@
+.display-section{min-height:12vh;grid-template-columns:minmax(140px,26%) 1fr}.display-section img{min-height:12vh}
+.display-section>div{padding:clamp(13px,1.5vw,28px)}
+.display-sections:has(.display-section:only-child) .display-section{min-height:17vh;width:min(82%,1120px)}.display-sections:has(.display-section:only-child) .display-section img{min-height:17vh}
+.display-sections:has(.display-section:nth-child(3)) .display-section{min-height:10vh}.display-sections:has(.display-section:nth-child(3)) .display-section img{min-height:10vh}
+.display-section:last-child:nth-child(odd){width:65%}
+@media(max-width:700px){.display-section,.display-sections:has(.display-section:nth-child(3)) .display-section{grid-template-columns:30% 1fr}.display-section:last-child:nth-child(odd){width:100%}}

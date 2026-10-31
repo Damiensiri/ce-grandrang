@@ -10,7 +10,7 @@ fetch(`/api/pages/${slug}`).then(r=>r.json()).then(p=>{
   let sections=[];try{sections=JSON.parse(p.sections||'[]')}catch{}
   document.querySelector('#sections').innerHTML=sections.map(s=>{
     const buttons=s.buttons||((s.buttonLabel&&s.buttonUrl)?[{label:s.buttonLabel,url:s.buttonUrl}]:[]);
-    const actions=buttons.filter(b=>b.label&&b.url).map(b=>`<a class="card-button" href="${escape(b.url)}" target="_blank" rel="noopener">${escape(b.label)}</a>`).join('');
+    const actions=buttons.filter(b=>b.label&&b.url).map(b=>{const external=/^(https?:)?\/\//i.test(b.url);return `<a class="card-button" href="${escape(b.url)}"${external?' target="_blank" rel="noopener"':''}>${escape(b.label)}</a>`}).join('');
     return `<article class="content-card">${s.image?`<div class="card-image" style="background-image:url('${encodeURI(s.image)}')"></div>`:''}<div class="card-copy"><h2>${escape(s.title)}</h2><p>${escape(s.text)}</p>${actions?`<div class="card-buttons">${actions}</div>`:''}</div></article>`;
   }).join('');
   if(slug==='contact'){

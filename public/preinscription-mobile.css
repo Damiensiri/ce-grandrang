@@ -1,0 +1,17 @@
+@media (max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .enrolment{padding:32px 14px 52px}
+  .progress{margin:28px 0 16px}
+  .wizard{padding:24px 14px}
+  .form-grid{gap:13px;margin-top:20px}
+  .form-grid input,.form-grid textarea,.date-choice input{padding:11px}
+  .bank-details{width:100%;min-width:0;max-width:100%;margin:12px 0 0;padding:16px 12px;border:1px solid #cbd9e5;overflow:hidden}
+  .bank-details legend{max-width:100%;padding:0 5px;font:600 20px/1.15 Georgia,serif;color:#06376b}
+  .bank-details .form-grid{margin-top:14px;gap:12px}
+  .bank-details .form-grid,.bank-details .form-grid label{width:100%;min-width:0;max-width:100%}
+  .bank-details input,.bank-details textarea{width:100%!important;min-width:0;max-width:100%}
+  .bank-details input[type=file]{font-size:12px}
+  .bank-details .payment-note{margin:14px 0 0;line-height:1.5}
+  .bank-details .previous{grid-column:1/-1;margin:0;padding:8px 0;font-size:14px;justify-self:start}
+  .bank-details #ribStatus{grid-column:1/-1;font-size:12px;color:#48627e;line-height:1.4}
+}

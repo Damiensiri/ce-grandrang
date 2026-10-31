@@ -1,0 +1,3 @@
+@import url('/preinscription-mobile.css');
+.local{display:none!important}
+.submission-error{min-height:1.35em;margin:22px 0 0;padding:13px 15px;border-left:4px solid #a12622;background:#fff1f0;color:#851c19;font-size:14px;font-weight:700;line-height:1.45}.submission-error:empty{display:none}.form-grid input[aria-invalid=true]{border-color:#a12622;outline:3px solid #f8d8d5}
