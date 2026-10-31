@@ -33,19 +33,11 @@
       root.setAttribute('role', 'presentation');
       root.inert = true;
       root.innerHTML = `
-        <div class="seasonal-corner seasonal-corner--left"></div>
-        <div class="seasonal-corner seasonal-corner--right"></div>
-        <div class="seasonal-garland" aria-hidden="true">
-          ${Array.from({ length: 15 }, (_, index) => {
-            const distance = index - 7;
-            return `<i style="--light-left:${index * 7.142}%;--light-drop:${5 + distance * distance * .28}px;--light-delay:${index * -.19}s"></i>`;
-          }).join('')}
-        </div>
-        <div class="seasonal-ornament seasonal-ornament--ruby"><i></i></div>
-        <div class="seasonal-ornament seasonal-ornament--champagne"><i></i></div>
-        <div class="seasonal-ornament seasonal-ornament--pinecone"><i></i></div>
+        <div class="seasonal-edge-lights seasonal-edge-lights--left"></div>
+        <div class="seasonal-edge-lights seasonal-edge-lights--right"></div>
+        <div class="seasonal-bottom-garland"></div>
         <div class="seasonal-snow" aria-hidden="true">
-          ${Array.from({ length: 18 }, (_, index) => `<i style="--flake-column:${3 + ((index * 37) % 94)}%;--flake-size:${2 + (index % 3)}px;--flake-duration:${12 + (index % 6) * 1.45}s;--flake-delay:${index * -.91}s;--flake-drift:${((index % 5) - 2) * 16}px"></i>`).join('')}
+          ${Array.from({ length: 16 }, (_, index) => `<i style="--flake-column:${3 + ((index * 37) % 94)}%;--flake-size:${2 + (index % 3)}px;--flake-duration:${12 + (index % 6) * 1.45}s;--flake-delay:${index * -.91}s;--flake-drift:${((index % 5) - 2) * 16}px"></i>`).join('')}
         </div>`;
       return root;
     }
@@ -94,6 +86,8 @@
   function refresh(date = new Date()) {
     document.querySelectorAll('.seasonal-decor').forEach(element => element.remove());
     document.querySelectorAll('.seasonal-host').forEach(element => element.classList.remove('seasonal-host'));
+    document.querySelectorAll('.seasonal-header--christmas').forEach(element => element.classList.remove('seasonal-header--christmas'));
+    document.querySelectorAll('.seasonal-news--christmas').forEach(element => element.classList.remove('seasonal-news--christmas'));
     document.documentElement.removeAttribute('data-season');
     const theme = activeTheme(date);
     if (!theme) return null;
@@ -103,6 +97,8 @@
     document.documentElement.dataset.season = theme;
     host.classList.add('seasonal-host');
     host.prepend(root);
+    document.querySelector('body > header')?.classList.add('seasonal-header--christmas');
+    document.querySelector('body > .news')?.classList.add('seasonal-news--christmas');
     return theme;
   }
 
