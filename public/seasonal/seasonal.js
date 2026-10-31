@@ -102,12 +102,44 @@
     return theme;
   }
 
+  async function loadManagedConfig() {
+    try {
+      const response = await fetch('/api/content', { cache: 'no-store' });
+      if (!response.ok) return;
+      const content = await response.json();
+      const mode = content['seasonal.mode'];
+      if (['auto', 'christmas', 'off'].includes(mode)) config.mode = mode;
+      const current = config.themes.christmas;
+      const number = (key, fallback) => {
+        const value = Number(content[key]);
+        return Number.isInteger(value) ? value : fallback;
+      };
+      config.themes.christmas = {
+        ...current,
+        enabled: content['seasonal.christmas.enabled'] == null ? current.enabled : content['seasonal.christmas.enabled'] !== '0',
+        start: {
+          month: number('seasonal.christmas.startMonth', current.start.month),
+          day: number('seasonal.christmas.startDay', current.start.day)
+        },
+        end: {
+          month: number('seasonal.christmas.endMonth', current.end.month),
+          day: number('seasonal.christmas.endDay', current.end.day)
+        }
+      };
+    } catch {}
+  }
+
+  async function start() {
+    await loadManagedConfig();
+    refresh();
+  }
+
   window.SeasonalDecorations = Object.freeze({
     config,
     getActiveTheme: activeTheme,
     refresh
   });
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => refresh(), { once: true });
-  else refresh();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+  else start();
 })();

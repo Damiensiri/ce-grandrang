@@ -6,6 +6,8 @@ const adultTabletEndpoint = 'https://grand-rang-pack-annuel.damiensiri-pro.worke
 const documentKey = (id: string) => `documents/${id}.pdf`;
 const documentUrl = (origin: string, id: string) => `${origin}/media/${documentKey(id)}`;
 const safePdfName = (value: string) => { const name = value.replace(/[\\/\r\n"<>:|?*]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 120) || 'document.pdf'; return name.toLowerCase().endsWith('.pdf') ? name : `${name}.pdf`; };
+const seasonalContentKeys = new Set(['seasonal.mode','seasonal.christmas.enabled','seasonal.christmas.startMonth','seasonal.christmas.startDay','seasonal.christmas.endMonth','seasonal.christmas.endDay']);
+const validAnnualDate = (month: number, day: number) => { const value = new Date(2024, month - 1, day); return Number.isInteger(month) && Number.isInteger(day) && value.getMonth() === month - 1 && value.getDate() === day; };
 
 const json = (data: unknown, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'no-store' } });
 const xml = (value: string) => value.replace(/[<>&'\"]/g, char => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[char]!));
@@ -135,7 +137,14 @@ export default {
     if (url.pathname === '/api/admin/content' && request.method === 'PUT') {
       if (!authorized(request, env)) return json({ error: 'Non autorisé' }, 401);
       const entries = await request.json<Record<string, string>>();
-      const statements = Object.entries(entries).filter(([key, value]) => /^(hero|news)\./.test(key) && typeof value === 'string').map(([key, value]) => env.DB.prepare('INSERT INTO site_content (content_key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(content_key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP').bind(key, value.trim()));
+      const seasonalEntries = Object.keys(entries).some(key => key.startsWith('seasonal.'));
+      if (seasonalEntries) {
+        const mode = entries['seasonal.mode'], enabled = entries['seasonal.christmas.enabled'];
+        const startMonth = Number(entries['seasonal.christmas.startMonth']), startDay = Number(entries['seasonal.christmas.startDay']), endMonth = Number(entries['seasonal.christmas.endMonth']), endDay = Number(entries['seasonal.christmas.endDay']);
+        if (!['auto','christmas','off'].includes(mode) || !['0','1'].includes(enabled)) return json({ error: 'Réglage saisonnier invalide.' }, 400);
+        if (!validAnnualDate(startMonth, startDay) || !validAnnualDate(endMonth, endDay)) return json({ error: 'Les dates saisonnières sont invalides.' }, 400);
+      }
+      const statements = Object.entries(entries).filter(([key, value]) => (/^(hero|news)\./.test(key) || seasonalContentKeys.has(key)) && typeof value === 'string').map(([key, value]) => env.DB.prepare('INSERT INTO site_content (content_key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) ON CONFLICT(content_key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP').bind(key, value.trim()));
       if (statements.length) await env.DB.batch(statements);
       return json(await content(env));
     }
