@@ -32,16 +32,42 @@
       root.setAttribute('aria-hidden', 'true');
       root.setAttribute('role', 'presentation');
       root.inert = true;
+      const snowflakes = Array.from({ length: 42 }, (_, index) => {
+        const depth = ['back', 'mid', 'mid', 'front'][index % 4];
+        const size = depth === 'back' ? 1 + (index % 2) : depth === 'front' ? 5 + (index % 4) : 2 + (index % 3);
+        const duration = depth === 'back' ? 17 + (index % 6) * 1.4 : depth === 'front' ? 10 + (index % 4) * 1.2 : 13 + (index % 6) * 1.3;
+        const drift = ((index % 9) - 4) * (depth === 'front' ? 18 : 11);
+        return `<i class="seasonal-snowflake seasonal-snowflake--${depth}" style="--flake-column:${1 + ((index * 37) % 98)}%;--flake-size:${size}px;--flake-duration:${duration}s;--flake-delay:${index * -.83}s;--flake-drift:${drift}px"></i>`;
+      }).join('');
       root.innerHTML = `
+        <div class="seasonal-corner-branch seasonal-corner-branch--left"></div>
+        <div class="seasonal-corner-branch seasonal-corner-branch--right"></div>
         <div class="seasonal-edge-lights seasonal-edge-lights--left"></div>
         <div class="seasonal-edge-lights seasonal-edge-lights--right"></div>
+        <div class="seasonal-lantern"></div>
         <div class="seasonal-bottom-garland"></div>
         <div class="seasonal-snow" aria-hidden="true">
-          ${Array.from({ length: 32 }, (_, index) => `<i style="--flake-column:${2 + ((index * 41) % 96)}%;--flake-size:${2 + (index % 4)}px;--flake-duration:${10 + (index % 7) * 1.15}s;--flake-delay:${index * -.57}s;--flake-drift:${((index % 7) - 3) * 13}px"></i>`).join('')}
+          ${snowflakes}
         </div>`;
       return root;
     }
   };
+
+  function createVillageAmbience() {
+    const ambience = document.createElement('div');
+    ambience.className = 'seasonal-village-ambience';
+    ambience.setAttribute('aria-hidden', 'true');
+    ambience.setAttribute('role', 'presentation');
+    ambience.inert = true;
+    ambience.innerHTML = `
+      <span class="seasonal-village-smoke" style="--village-x:18%;--village-delay:-2.1s"></span>
+      <span class="seasonal-village-smoke" style="--village-x:47%;--village-delay:-5.4s"></span>
+      <span class="seasonal-village-smoke" style="--village-x:73%;--village-delay:-3.7s"></span>
+      ${[7, 13, 22, 31, 39, 51, 59, 67, 78, 86, 93].map((left, index) =>
+        `<i style="--village-x:${left}%;--village-y:${8 + (index % 3) * 7}px;--village-delay:${index * -.71}s"></i>`
+      ).join('')}`;
+    return ambience;
+  }
 
   const validDate = value => value && Number.isInteger(value.month) && Number.isInteger(value.day);
   const dayKey = value => value.month * 100 + value.day;
@@ -88,6 +114,7 @@
     document.querySelectorAll('.seasonal-host').forEach(element => element.classList.remove('seasonal-host'));
     document.querySelectorAll('.seasonal-header--christmas').forEach(element => element.classList.remove('seasonal-header--christmas'));
     document.querySelectorAll('.seasonal-news--christmas').forEach(element => element.classList.remove('seasonal-news--christmas'));
+    document.querySelectorAll('.seasonal-village-ambience').forEach(element => element.remove());
     document.documentElement.removeAttribute('data-season');
     const theme = activeTheme(date);
     if (!theme) return null;
@@ -97,7 +124,9 @@
     document.documentElement.dataset.season = theme;
     host.classList.add('seasonal-host');
     host.prepend(root);
-    document.querySelector('body > header')?.classList.add('seasonal-header--christmas');
+    const header = document.querySelector('body > header');
+    header?.classList.add('seasonal-header--christmas');
+    header?.append(createVillageAmbience());
     document.querySelector('body > .news')?.classList.add('seasonal-news--christmas');
     return theme;
   }

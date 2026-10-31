@@ -1,4 +1,4 @@
-export interface Env { ASSETS: Fetcher; PACK: Fetcher; DB: D1Database; MEDIA: R2Bucket; ADMIN_PASSWORD: string; }
+export interface Env { ASSETS: Fetcher; PACK: Fetcher; DB: D1Database; MEDIA: R2Bucket; ADMIN_PASSWORD: string; PREVIEW_ONLY?: string; }
 
 const contactEndpoint = 'https://script.google.com/macros/s/AKfycbye9MNIH8oasKx1AbNl-sfKkf8HA1lyBQua4VfLeNm288heyocfZ4Op7u-je4U2n-9y/exec';
 const tabletEndpoint = 'https://grand-rang-pack-annuel.damiensiri-pro.workers.dev/api/bootstrap';
@@ -32,6 +32,14 @@ async function content(env: Env) {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    const isolatedPreview = env.PREVIEW_ONLY === '1';
+    if (isolatedPreview) {
+      const blockedPreviewPath = ['/admin', '/api/admin', '/preinscription', '/api/preinscription', '/merci-inscription', '/display', '/api/display', '/api/contact']
+        .some((path) => url.pathname.startsWith(path));
+      if (blockedPreviewPath || !['GET', 'HEAD'].includes(request.method)) {
+        return json({ error: 'Action désactivée dans la prévisualisation.' }, 405);
+      }
+    }
     if (url.pathname === '/merci-inscription' && request.method === 'GET') {
       const page = await env.ASSETS.fetch(new Request(new URL('/merci-inscription.html', url), request));
       return new Response(page.body, { headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store' } });
