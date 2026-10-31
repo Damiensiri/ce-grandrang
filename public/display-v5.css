@@ -1,0 +1,3 @@
+.with-sections .slide-copy{width:100%!important;justify-content:flex-start!important}
+.with-sections .display-sections{align-self:center;margin-top:auto;margin-bottom:auto}
+@media(max-width:700px){.with-sections .display-sections{align-self:stretch;margin-top:18px;margin-bottom:0}}

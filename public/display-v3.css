@@ -1,0 +1,14 @@
+/* Une slide du site est une affiche : photo plein écran, voile Grand Rang et texte posé dessus. */
+.slide:not(.only-copy):not(.slide-message){display:block;background:var(--navy)}
+.slide.media-only .slide-media{position:absolute;inset:0}.slide.media-only .slide-media:after{display:none}
+.slide:not(.only-copy):not(.slide-message) .slide-media{position:absolute;inset:0;z-index:0}
+.slide:not(.only-copy):not(.slide-message) .slide-media:after{background:linear-gradient(90deg,rgba(4,34,69,.88) 0%,rgba(4,34,69,.55) 43%,rgba(4,34,69,.08) 78%,rgba(4,34,69,.25) 100%)}
+.slide:not(.only-copy):not(.slide-message) .slide-copy{position:relative;z-index:1;min-height:100%;width:min(70%,1040px);padding:8vw 9vw;background:transparent;color:#fff;text-shadow:0 2px 16px #00172e99}
+.slide:not(.only-copy):not(.slide-message) .eyebrow{color:#fff}
+.slide:not(.only-copy):not(.slide-message) h1{max-width:800px}
+.slide:not(.only-copy):not(.slide-message) .slide-intro{max-width:560px}
+.slide:not(.only-copy):not(.slide-message) .display-sections{max-width:720px}
+.slide:not(.only-copy):not(.slide-message) .display-section{background:#f5f8fbeb;text-shadow:none;border-left-color:#75b4e6}
+.with-sections .slide-copy{justify-content:flex-end!important;padding-top:4vw!important;padding-bottom:4vw!important}
+.display-sections{grid-template-columns:repeat(2,minmax(0,1fr));justify-content:center;max-width:900px!important}.display-section:last-child:nth-child(odd){grid-column:1 / -1;width:calc(50% - 6px);justify-self:center}
+@media(max-width:700px){.slide:not(.only-copy):not(.slide-message) .slide-copy{width:100%;padding:10vw 8vw;justify-content:flex-end}.slide:not(.only-copy):not(.slide-message) .slide-media:after{background:linear-gradient(0deg,rgba(4,34,69,.94),rgba(4,34,69,.18) 75%)}.with-sections .slide-copy{padding-top:8vw!important;padding-bottom:6vw!important}.display-sections{grid-template-columns:1fr}.display-section:last-child:nth-child(odd){grid-column:auto;width:100%}}

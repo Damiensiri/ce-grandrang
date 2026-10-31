@@ -1,0 +1,5 @@
+.with-sections .display-sections{margin-top:auto;margin-bottom:3vh}
+.display-section{min-height:18vh}.display-section img{min-height:18vh}
+.display-sections:has(.display-section:only-child) .display-section{min-height:25vh}.display-sections:has(.display-section:only-child) .display-section img{min-height:25vh}
+.display-sections:has(.display-section:nth-child(3)) .display-section{min-height:13vh}.display-sections:has(.display-section:nth-child(3)) .display-section img{min-height:13vh}
+@media(max-width:700px){.with-sections .display-sections{margin-top:18px;margin-bottom:0}.display-section,.display-sections:has(.display-section:nth-child(3)) .display-section{min-height:unset}}
