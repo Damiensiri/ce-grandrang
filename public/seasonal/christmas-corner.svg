@@ -1,26 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 270" role="img" aria-label="">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" aria-hidden="true">
   <defs>
-    <linearGradient id="stem" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#563e25"/><stop offset="1" stop-color="#2f271d"/></linearGradient>
-    <linearGradient id="pine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d6550"/><stop offset=".55" stop-color="#0b4439"/><stop offset="1" stop-color="#062e2b"/></linearGradient>
-    <radialGradient id="berry" cx="32%" cy="26%"><stop stop-color="#f8b6a8"/><stop offset=".18" stop-color="#b72834"/><stop offset="1" stop-color="#68151f"/></radialGradient>
-    <radialGradient id="gold" cx="32%" cy="25%"><stop stop-color="#fff4ba"/><stop offset=".2" stop-color="#d8b75e"/><stop offset="1" stop-color="#7b6128"/></radialGradient>
-    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#052b2a" flood-opacity=".24"/></filter>
+    <linearGradient id="branch" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#72583a"/><stop offset=".55" stop-color="#493923"/><stop offset="1" stop-color="#2d281d"/></linearGradient>
+    <linearGradient id="needle" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2e7159"/><stop offset=".5" stop-color="#174f42"/><stop offset="1" stop-color="#0a3733"/></linearGradient>
+    <linearGradient id="needleLight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4c8668"/><stop offset="1" stop-color="#1c5a48"/></linearGradient>
+    <radialGradient id="berry" cx="30%" cy="25%"><stop stop-color="#eaa9a0"/><stop offset=".16" stop-color="#a52c35"/><stop offset="1" stop-color="#57151d"/></radialGradient>
+    <filter id="soft" x="-20%" y="-30%" width="150%" height="170%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#032825" flood-opacity=".28"/></filter>
+    <g id="sprig">
+      <path d="M0 0C38 7 80 20 122 39" fill="none" stroke="url(#branch)" stroke-width="4.5" stroke-linecap="round"/>
+      <g fill="none" stroke="url(#needle)" stroke-width="2.8" stroke-linecap="round">
+        <path d="M8 2L-5-15M10 3L-3 19M18 5L10-17M20 6L7 26M29 8L24-17M31 9L17 31M41 12L40-15M43 13L27 35M54 16L57-10M56 17L41 40M68 21L75-3M70 22L56 45M82 26L93 5M84 27L73 50M98 32L111 14M100 33L91 54M113 37L127 23M115 38L109 58"/>
+      </g>
+      <g fill="none" stroke="url(#needleLight)" stroke-width="1.35" stroke-linecap="round" opacity=".92">
+        <path d="M5 1L-2-9M14 4L8 17M24 7L21-9M35 10L27 24M47 14L49-4M60 18L52 33M74 23L80 8M88 28L81 42M103 34L113 22M118 38L115 51"/>
+      </g>
+    </g>
   </defs>
-  <g filter="url(#shadow)">
-    <path d="M-20 17C74 59 156 83 328 130" fill="none" stroke="url(#stem)" stroke-width="10" stroke-linecap="round"/>
-    <g fill="none" stroke="url(#pine)" stroke-width="10" stroke-linecap="round">
-      <path d="M12 28L1 103M30 39L45 116M52 48L43 140M70 56L89 139M91 64L82 163M111 69L137 157M134 77L126 177M158 84L184 171M181 93L176 190M204 98L235 181M231 106L226 202M258 114L295 188M286 122L287 211M313 129L350 180"/>
-    </g>
-    <g fill="none" stroke="#2a755d" stroke-width="4" stroke-linecap="round" opacity=".9">
-      <path d="M8 41L-3 78M26 48L40 86M49 58L39 99M70 67L87 102M94 75L82 117M116 80L136 114M140 87L128 128M163 94L184 127M189 101L176 141M214 107L237 140M243 115L228 152M270 122L299 152M302 129L290 164M326 137L352 158"/>
-    </g>
+  <g filter="url(#soft)">
+    <path d="M-18 18C104 43 220 82 338 140c67 33 116 65 171 111" fill="none" stroke="url(#branch)" stroke-width="9" stroke-linecap="round"/>
+    <use href="#sprig" transform="translate(2 19) rotate(-12) scale(1.13)"/>
+    <use href="#sprig" transform="translate(58 34) rotate(-2) scale(1.18)"/>
+    <use href="#sprig" transform="translate(114 53) rotate(7) scale(1.16)"/>
+    <use href="#sprig" transform="translate(171 75) rotate(14) scale(1.1)"/>
+    <use href="#sprig" transform="translate(227 99) rotate(20) scale(1.03)"/>
+    <use href="#sprig" transform="translate(282 126) rotate(27) scale(.96)"/>
+    <use href="#sprig" transform="translate(337 157) rotate(34) scale(.88)"/>
+    <use href="#sprig" transform="translate(389 191) rotate(40) scale(.72)"/>
+    <use href="#sprig" transform="translate(50 31) rotate(109) scale(.91)"/>
+    <use href="#sprig" transform="translate(116 52) rotate(115) scale(.88)"/>
+    <use href="#sprig" transform="translate(185 78) rotate(121) scale(.83)"/>
+    <use href="#sprig" transform="translate(255 108) rotate(128) scale(.77)"/>
+    <use href="#sprig" transform="translate(326 145) rotate(135) scale(.69)"/>
+    <use href="#sprig" transform="translate(390 184) rotate(142) scale(.57)"/>
     <g fill="url(#berry)">
-      <circle cx="67" cy="98" r="9"/><circle cx="82" cy="103" r="8"/><circle cx="73" cy="115" r="8"/>
-      <circle cx="177" cy="132" r="8"/><circle cx="191" cy="138" r="8"/><circle cx="181" cy="146" r="7"/>
-      <circle cx="284" cy="158" r="8"/><circle cx="298" cy="162" r="7"/>
+      <circle cx="118" cy="91" r="7"/><circle cx="130" cy="96" r="6.5"/><circle cx="121" cy="104" r="6"/>
+      <circle cx="272" cy="153" r="6.5"/><circle cx="283" cy="158" r="6"/><circle cx="275" cy="166" r="5.5"/>
     </g>
-    <path d="M213 104C196 79 178 78 168 94c18 4 30 14 34 32M213 104c26-16 43-11 45 8-17-3-32 2-43 17" fill="#b42530" stroke="#731923" stroke-width="2"/>
-    <circle cx="212" cy="110" r="8" fill="url(#gold)"/>
-    <path d="M319 136v21" stroke="#b99848" stroke-width="3"/><path d="M313 158h12v8h-12z" fill="#9d7e34"/><circle cx="319" cy="184" r="21" fill="url(#gold)"/><path d="M307 176c8 4 16 4 24 0M304 187c10-5 20-5 30 0" fill="none" stroke="#fff1b0" stroke-width="2" opacity=".8"/>
+    <g transform="translate(397 193) rotate(35)">
+      <path d="M0 0v26" stroke="#8f744a" stroke-width="2"/>
+      <path d="M-11 24C-18 39-15 62 1 76 17 62 19 39 11 24 4 18-4 18-11 24Z" fill="#6e4b2e"/>
+      <path d="M-7 29 1 35l8-6M-11 40l12 8 13-8M-12 53 1 61l12-8" fill="none" stroke="#3e2d1e" stroke-width="3" stroke-linecap="round"/>
+    </g>
   </g>
 </svg>

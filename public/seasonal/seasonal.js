@@ -36,40 +36,20 @@
         <div class="seasonal-corner seasonal-corner--left"></div>
         <div class="seasonal-corner seasonal-corner--right"></div>
         <div class="seasonal-garland" aria-hidden="true">
-          ${Array.from({ length: 13 }, (_, index) => {
-            const distance = index - 6;
-            return `<i style="--light-left:${index * 8.333}%;--light-drop:${4 + distance * distance * .35}px;--light-delay:${index * -.21}s"></i>`;
+          ${Array.from({ length: 15 }, (_, index) => {
+            const distance = index - 7;
+            return `<i style="--light-left:${index * 7.142}%;--light-drop:${5 + distance * distance * .28}px;--light-delay:${index * -.19}s"></i>`;
           }).join('')}
         </div>
-        <div class="seasonal-ornament seasonal-ornament--left"><i></i></div>
-        <div class="seasonal-ornament seasonal-ornament--right"><i></i></div>
+        <div class="seasonal-ornament seasonal-ornament--ruby"><i></i></div>
+        <div class="seasonal-ornament seasonal-ornament--champagne"><i></i></div>
+        <div class="seasonal-ornament seasonal-ornament--pinecone"><i></i></div>
         <div class="seasonal-snow" aria-hidden="true">
-          ${Array.from({ length: 24 }, (_, index) => `<i style="--flake-column:${(index * 37) % 101}%;--flake-size:${2 + (index % 4)}px;--flake-duration:${11 + (index % 7) * 1.4}s;--flake-delay:${index * -.83}s;--flake-drift:${((index % 5) - 2) * 18}px"></i>`).join('')}
+          ${Array.from({ length: 18 }, (_, index) => `<i style="--flake-column:${3 + ((index * 37) % 94)}%;--flake-size:${2 + (index % 3)}px;--flake-duration:${12 + (index % 6) * 1.45}s;--flake-delay:${index * -.91}s;--flake-drift:${((index % 5) - 2) * 16}px"></i>`).join('')}
         </div>`;
       return root;
     }
   };
-  let anchorObserver;
-
-  function syncAnchor(root) {
-    const anchor = document.querySelector('.hero,.page-hero');
-    const header = document.querySelector('body > header');
-    if (!anchor) return;
-    const update = () => {
-      const headerBottom = header?.getBoundingClientRect().bottom || 0;
-      const anchorTop = anchor.getBoundingClientRect().top;
-      root.style.setProperty('--seasonal-anchor', `${Math.max(headerBottom, anchorTop)}px`);
-    };
-    update();
-    anchorObserver?.disconnect();
-    if ('ResizeObserver' in window) {
-      anchorObserver = new ResizeObserver(update);
-      if (header) anchorObserver.observe(header);
-      const news = document.querySelector('body > .news');
-      if (news) anchorObserver.observe(news);
-    }
-    window.addEventListener('resize', update, { passive: true });
-  }
 
   const validDate = value => value && Number.isInteger(value.month) && Number.isInteger(value.day);
   const dayKey = value => value.month * 100 + value.day;
@@ -112,14 +92,17 @@
   }
 
   function refresh(date = new Date()) {
-    document.querySelector('.seasonal-decor')?.remove();
+    document.querySelectorAll('.seasonal-decor').forEach(element => element.remove());
+    document.querySelectorAll('.seasonal-host').forEach(element => element.classList.remove('seasonal-host'));
     document.documentElement.removeAttribute('data-season');
     const theme = activeTheme(date);
     if (!theme) return null;
+    const host = document.querySelector('.hero,.page-hero');
+    if (!host) return null;
     const root = renderers[theme]();
     document.documentElement.dataset.season = theme;
-    document.body.append(root);
-    syncAnchor(root);
+    host.classList.add('seasonal-host');
+    host.prepend(root);
     return theme;
   }
 

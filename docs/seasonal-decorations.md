@@ -21,6 +21,12 @@ L'ajout de `?season=christmas` à une URL force Noël dans l'onglet courant. Le 
 
 Ces paramètres n'écrivent ni dans D1 ni dans R2 et ne modifient aucun compte utilisateur.
 
+## Intégration visuelle
+
+Le renderer est inséré comme premier enfant de `.hero` ou `.page-hero`. Sa couche est positionnée absolument dans cette seule section : elle défile avec le contenu, reste derrière les textes et ne couvre jamais le viewport. Elle est inerte, masquée aux technologies d'assistance et ne reçoit aucun événement de pointeur.
+
+Le moteur ne modifie ni l'en-tête, ni le menu, ni le positionnement ou le `z-index` des composants existants. Les décorations sont coupées aux limites du héros afin d'éviter tout débordement horizontal.
+
 ## Extension
 
 Un nouveau thème nécessite une entrée de configuration et un renderer associé dans `seasonal.js`. Chaque renderer produit une couche purement décorative, masquée aux technologies d'assistance et sans interaction avec la page.
