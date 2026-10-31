@@ -12,16 +12,16 @@ body>header.seasonal-header--christmas>.gr-brand,body>header.seasonal-header--ch
 .seasonal-edge-lights--left{left:-11px}
 .seasonal-edge-lights--right{right:-11px;animation-delay:-1.7s}
 .seasonal-snow{position:absolute;inset:0;overflow:hidden;mask-image:linear-gradient(to bottom,transparent 0,#000 8%,#000 78%,transparent 100%)}
-.seasonal-snow i{position:absolute;top:-12px;left:var(--flake-column);width:var(--flake-size);height:var(--flake-size);border-radius:50%;background:rgba(255,255,255,.74);box-shadow:0 0 4px rgba(255,255,255,.48);animation:seasonal-snowfall var(--flake-duration) linear infinite;animation-delay:var(--flake-delay)}
+.seasonal-snow i{position:absolute;top:-12px;left:var(--flake-column);width:var(--flake-size);height:var(--flake-size);border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 0 5px rgba(255,255,255,.68);animation:seasonal-snowfall var(--flake-duration) linear infinite;animation-delay:var(--flake-delay);will-change:transform}
 .seasonal-decor--inner .seasonal-bottom-garland{height:clamp(90px,10vw,135px);opacity:.92}
 .seasonal-decor--inner .seasonal-edge-lights{bottom:12%}
 
 @keyframes seasonal-glow{0%,100%{opacity:.46;filter:brightness(.88)}50%{opacity:.82;filter:brightness(1.12)}}
-@keyframes seasonal-snowfall{0%{transform:translate3d(0,-16px,0);opacity:0}10%{opacity:.72}88%{opacity:.5}100%{transform:translate3d(var(--flake-drift),760px,0);opacity:0}}
+@keyframes seasonal-snowfall{0%{transform:translate3d(0,-16px,0);opacity:0}8%{opacity:.92}86%{opacity:.7}100%{transform:translate3d(var(--flake-drift),760px,0);opacity:0}}
 
 @media(max-width:1024px){body>header.seasonal-header--christmas:before{height:42px;background-size:auto 42px}.news.seasonal-news--christmas{background-position:82% -10px,96% 45px;background-size:50px,72px}.seasonal-bottom-garland{height:clamp(125px,18vw,175px)}}
 
-@media(max-width:700px){body>header.seasonal-header--christmas:before{height:26px;background-size:auto 26px;opacity:.96}body>header.seasonal-header--christmas:after{content:none}.news.seasonal-news--christmas{background-position:83% 5px,101% 68%;background-size:40px,58px}.seasonal-bottom-garland{left:-2%;right:-2%;bottom:-2px;height:132px;background-size:100% 100%;opacity:.97}.seasonal-edge-lights{top:12%;bottom:21%;width:28px;opacity:.48}.seasonal-edge-lights--left{left:-9px}.seasonal-edge-lights--right{right:-9px}.seasonal-snow{display:none}.seasonal-decor--inner .seasonal-bottom-garland{height:84px}.seasonal-decor--inner .seasonal-edge-lights{display:none}}
+@media(max-width:700px){body>header.seasonal-header--christmas:before{height:26px;background-size:auto 26px;opacity:.96}body>header.seasonal-header--christmas:after{content:none}.news.seasonal-news--christmas{background-position:83% 5px,101% 68%;background-size:40px,58px}.seasonal-bottom-garland{left:-2%;right:-2%;bottom:-2px;height:132px;background-size:100% 100%;opacity:.97}.seasonal-edge-lights{top:12%;bottom:21%;width:28px;opacity:.48}.seasonal-edge-lights--left{left:-9px}.seasonal-edge-lights--right{right:-9px}.seasonal-snow i:nth-child(n+19){display:none}.seasonal-decor--inner .seasonal-bottom-garland{height:84px}.seasonal-decor--inner .seasonal-edge-lights{display:none}}
 
 @media(prefers-reduced-motion:reduce){.seasonal-edge-lights,.seasonal-snow i{animation:none}.seasonal-snow{display:none}}
 @media(forced-colors:active){.seasonal-decor,body>header.seasonal-header--christmas:before,body>header.seasonal-header--christmas:after{display:none}.news.seasonal-news--christmas{background-image:none}}

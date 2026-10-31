@@ -37,7 +37,7 @@
         <div class="seasonal-edge-lights seasonal-edge-lights--right"></div>
         <div class="seasonal-bottom-garland"></div>
         <div class="seasonal-snow" aria-hidden="true">
-          ${Array.from({ length: 16 }, (_, index) => `<i style="--flake-column:${3 + ((index * 37) % 94)}%;--flake-size:${2 + (index % 3)}px;--flake-duration:${12 + (index % 6) * 1.45}s;--flake-delay:${index * -.91}s;--flake-drift:${((index % 5) - 2) * 16}px"></i>`).join('')}
+          ${Array.from({ length: 32 }, (_, index) => `<i style="--flake-column:${2 + ((index * 41) % 96)}%;--flake-size:${2 + (index % 4)}px;--flake-duration:${10 + (index % 7) * 1.15}s;--flake-delay:${index * -.57}s;--flake-drift:${((index % 7) - 3) * 13}px"></i>`).join('')}
         </div>`;
       return root;
     }
