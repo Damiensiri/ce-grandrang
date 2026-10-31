@@ -1,5 +1,5 @@
 .seasonal-host{position:relative;isolation:isolate;overflow:hidden}
-.seasonal-decor{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;contain:layout style paint;user-select:none}
+.seasonal-decor{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:layout style paint;user-select:none}
 
 body>header.seasonal-header--christmas:before,body>header.seasonal-header--christmas:after{content:"";position:absolute;top:0;width:330px;height:84px;pointer-events:none;background:url('/seasonal/christmas-corner-photo.webp') left top/330px 220px no-repeat;opacity:.9;-webkit-mask-image:linear-gradient(to bottom,#000 0,transparent 25px),linear-gradient(to right,#000 0,transparent 48px);-webkit-mask-composite:source-over;mask-image:linear-gradient(to bottom,#000 0,transparent 25px),linear-gradient(to right,#000 0,transparent 48px);mask-composite:add}
 body>header.seasonal-header--christmas:before{left:-12px}
