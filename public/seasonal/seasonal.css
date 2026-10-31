@@ -26,7 +26,8 @@
 }
 
 body > header.seasonal-header--christmas {
-  height: 100px;
+  height: 114px;
+  padding-bottom: 34px;
 }
 
 body > header.seasonal-header--christmas::before {
@@ -36,7 +37,7 @@ body > header.seasonal-header--christmas::before {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 100px;
+  height: 56px;
   background: url('/seasonal/christmas-village-strip-v3.png') center bottom / 100% 100% no-repeat;
   opacity: 1;
   pointer-events: none;
@@ -49,8 +50,8 @@ body > header.seasonal-header--christmas::after {
   top: 0;
   right: 0;
   left: 0;
-  height: 68px;
-  background: linear-gradient(to bottom, rgba(255,255,255,.98) 0 42%, rgba(255,255,255,.78) 68%, rgba(255,255,255,0) 100%);
+  height: 64px;
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0 76%, rgba(255,255,255,.9) 88%, rgba(255,255,255,0) 100%);
   pointer-events: none;
 }
 
@@ -68,7 +69,7 @@ body > header.seasonal-header--christmas > details {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 100px;
+  height: 56px;
   overflow: hidden;
   pointer-events: none;
 }
@@ -88,7 +89,7 @@ body > header.seasonal-header--christmas > details {
 .seasonal-village-smoke {
   position: absolute;
   left: var(--village-x);
-  bottom: 53px;
+  bottom: 30px;
   width: 11px;
   height: 20px;
   border-radius: 50%;
@@ -317,15 +318,18 @@ body > header.seasonal-header--christmas > details {
 }
 
 @media (max-width: 1024px) {
-  body > header.seasonal-header--christmas { height: 90px; }
+  body > header.seasonal-header--christmas {
+    height: 108px;
+    padding-bottom: 28px;
+  }
 
   body > header.seasonal-header--christmas::before {
-    height: 76px;
+    height: 52px;
     background-size: 100% 100%;
   }
 
-  .seasonal-village-ambience { height: 76px; }
-  .seasonal-village-smoke { bottom: 41px; transform: scale(.72); }
+  .seasonal-village-ambience { height: 52px; }
+  .seasonal-village-smoke { bottom: 28px; transform: scale(.72); }
 
   .news.seasonal-news--christmas {
     background-position: 82% -10px, 96% 45px;
@@ -339,16 +343,19 @@ body > header.seasonal-header--christmas > details {
 }
 
 @media (max-width: 700px) {
-  body > header.seasonal-header--christmas { height: 72px; }
+  body > header.seasonal-header--christmas {
+    height: 100px;
+    padding-bottom: 28px;
+  }
 
   body > header.seasonal-header--christmas::before {
-    height: 44px;
+    height: 36px;
     background-size: 100% 100%;
     opacity: .96;
   }
 
   body > header.seasonal-header--christmas::after { content: none; }
-  .seasonal-village-ambience { height: 44px; }
+  .seasonal-village-ambience { height: 36px; }
   .seasonal-village-ambience i:nth-of-type(n+7),
   .seasonal-village-smoke { display: none; }
 
