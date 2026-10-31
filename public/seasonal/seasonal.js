@@ -32,7 +32,7 @@
       root.setAttribute('aria-hidden', 'true');
       root.setAttribute('role', 'presentation');
       root.inert = true;
-      const snowflakes = Array.from({ length: 42 }, (_, index) => {
+      const snowflakes = Array.from({ length: 58 }, (_, index) => {
         const depth = ['back', 'mid', 'mid', 'front'][index % 4];
         const size = depth === 'back' ? 1 + (index % 2) : depth === 'front' ? 5 + (index % 4) : 2 + (index % 3);
         const duration = depth === 'back' ? 17 + (index % 6) * 1.4 : depth === 'front' ? 10 + (index % 4) * 1.2 : 13 + (index % 6) * 1.3;
@@ -42,6 +42,8 @@
       root.innerHTML = `
         <div class="seasonal-corner-branch seasonal-corner-branch--left"></div>
         <div class="seasonal-corner-branch seasonal-corner-branch--right"></div>
+        <div class="seasonal-side-sprig seasonal-side-sprig--left"></div>
+        <div class="seasonal-side-sprig seasonal-side-sprig--right"></div>
         <div class="seasonal-edge-lights seasonal-edge-lights--left"></div>
         <div class="seasonal-edge-lights seasonal-edge-lights--right"></div>
         <div class="seasonal-warm-bokeh"></div>
