@@ -23,6 +23,32 @@
     }
   };
 
+  let backdropObserver = null;
+  const CHRISTMAS_BACKDROP = 'linear-gradient(90deg, rgba(8,24,38,.62) 0%, rgba(15,28,38,.38) 46%, rgba(92,53,12,.16) 100%)';
+
+  function restoreBackdrop() {
+    backdropObserver?.disconnect();
+    backdropObserver = null;
+    document.querySelectorAll('[data-seasonal-original-background]').forEach(element => {
+      element.style.backgroundImage = element.dataset.seasonalOriginalBackground || '';
+      delete element.dataset.seasonalOriginalBackground;
+    });
+  }
+
+  function applyChristmasBackdrop(host) {
+    const update = () => {
+      const current = host.style.backgroundImage;
+      if (!current || current.includes('rgba(92, 53, 12, 0.16)')) return;
+      const imageStart = current.indexOf('url(');
+      if (imageStart < 0) return;
+      host.dataset.seasonalOriginalBackground = current;
+      host.style.backgroundImage = `${CHRISTMAS_BACKDROP}, ${current.slice(imageStart)}`;
+    };
+    update();
+    backdropObserver = new MutationObserver(update);
+    backdropObserver.observe(host, { attributes: true, attributeFilter: ['style'] });
+  }
+
   const renderers = {
     christmas() {
       const root = document.createElement('div');
@@ -32,22 +58,26 @@
       root.setAttribute('aria-hidden', 'true');
       root.setAttribute('role', 'presentation');
       root.inert = true;
-      const snowflakes = Array.from({ length: 58 }, (_, index) => {
-        const depth = ['back', 'mid', 'mid', 'front'][index % 4];
-        const size = depth === 'back' ? 1 + (index % 2) : depth === 'front' ? 5 + (index % 4) : 2 + (index % 3);
-        const duration = depth === 'back' ? 17 + (index % 6) * 1.4 : depth === 'front' ? 10 + (index % 4) * 1.2 : 13 + (index % 6) * 1.3;
-        const drift = ((index % 9) - 4) * (depth === 'front' ? 18 : 11);
-        return `<i class="seasonal-snowflake seasonal-snowflake--${depth}" style="--flake-column:${1 + ((index * 37) % 98)}%;--flake-size:${size}px;--flake-duration:${duration}s;--flake-delay:${index * -.83}s;--flake-drift:${drift}px"></i>`;
+      const snowflakes = Array.from({ length: 72 }, (_, index) => {
+        const depth = ['back', 'back', 'mid', 'mid', 'mid', 'front'][index % 6];
+        const size = depth === 'back' ? 1 + (index % 2) * .7 : depth === 'front' ? 5 + (index % 4) * 1.4 : 2 + (index % 3) * 1.15;
+        const duration = depth === 'back' ? 18 + (index % 7) * 1.35 : depth === 'front' ? 10.5 + (index % 5) * 1.15 : 14 + (index % 7) * 1.2;
+        const drift = ((index % 11) - 5) * (depth === 'front' ? 15 : 8);
+        const opacity = depth === 'back' ? .3 + (index % 4) * .06 : depth === 'front' ? .46 + (index % 3) * .09 : .58 + (index % 4) * .07;
+        const column = 1 + ((index * 47) % 98);
+        const mobileSafe = column < 4 || column > 74 ? ' seasonal-snowflake--mobile-safe' : '';
+        return `<i class="seasonal-snowflake seasonal-snowflake--${depth}${mobileSafe}" style="--flake-column:${column}%;--flake-size:${size}px;--flake-duration:${duration}s;--flake-delay:${index * -.67}s;--flake-drift:${drift}px;--flake-opacity:${opacity}"></i>`;
       }).join('');
       root.innerHTML = `
-        <div class="seasonal-corner-branch seasonal-corner-branch--left"></div>
-        <div class="seasonal-corner-branch seasonal-corner-branch--right"></div>
-        <div class="seasonal-side-sprig seasonal-side-sprig--left"></div>
-        <div class="seasonal-side-sprig seasonal-side-sprig--right"></div>
-        <div class="seasonal-edge-lights seasonal-edge-lights--left"></div>
-        <div class="seasonal-edge-lights seasonal-edge-lights--right"></div>
-        <div class="seasonal-warm-bokeh"></div>
-        <div class="seasonal-fence-right"></div>
+        <div class="seasonal-hero-lighting"></div>
+        <div class="seasonal-hero-frame"></div>
+        <div class="seasonal-hero-sparkles">
+          <i style="--spark-x:6%;--spark-y:18%;--spark-delay:-1.2s"></i>
+          <i style="--spark-x:94%;--spark-y:24%;--spark-delay:-3.8s"></i>
+          <i style="--spark-x:10%;--spark-y:70%;--spark-delay:-5.1s"></i>
+          <i style="--spark-x:89%;--spark-y:76%;--spark-delay:-2.4s"></i>
+          <i style="--spark-x:82%;--spark-y:12%;--spark-delay:-6.2s"></i>
+        </div>
         <div class="seasonal-snow" aria-hidden="true">
           ${snowflakes}
         </div>`;
@@ -61,12 +91,20 @@
     ambience.setAttribute('aria-hidden', 'true');
     ambience.setAttribute('role', 'presentation');
     ambience.inert = true;
+    const villageLights = [
+      [3.4, 8, 'tree'], [6.1, 12, 'window'], [9.8, 9, 'window'], [13.4, 16, 'tree'],
+      [17.2, 9, 'window'], [21.4, 13, 'window'], [25.7, 8, 'tree'], [29.8, 12, 'window'],
+      [34.2, 9, 'window'], [38.5, 15, 'tree'], [42.8, 14, 'church'], [47.6, 9, 'window'],
+      [52.1, 13, 'window'], [56.4, 8, 'tree'], [61.2, 12, 'window'], [66.7, 9, 'window'],
+      [71.4, 15, 'tree'], [76.1, 9, 'window'], [81.3, 13, 'window'], [86.5, 8, 'tree'],
+      [91.2, 12, 'window'], [96, 9, 'tree']
+    ];
     ambience.innerHTML = `
-      <span class="seasonal-village-smoke" style="--village-x:18%;--village-delay:-2.1s"></span>
-      <span class="seasonal-village-smoke" style="--village-x:47%;--village-delay:-5.4s"></span>
-      <span class="seasonal-village-smoke" style="--village-x:73%;--village-delay:-3.7s"></span>
-      ${[7, 13, 22, 31, 39, 51, 59, 67, 78, 86, 93].map((left, index) =>
-        `<i style="--village-x:${left}%;--village-y:${8 + (index % 3) * 7}px;--village-delay:${index * -.71}s"></i>`
+      <span class="seasonal-village-smoke" style="--village-x:10.5%;--village-delay:-2.1s"></span>
+      <span class="seasonal-village-smoke" style="--village-x:43.2%;--village-delay:-5.4s"></span>
+      <span class="seasonal-village-smoke" style="--village-x:72.4%;--village-delay:-3.7s"></span>
+      ${villageLights.map(([left, bottom, type], index) =>
+        `<i class="seasonal-village-light seasonal-village-light--${type}" style="--village-x:${left}%;--village-y:${bottom}px;--village-delay:${index * -.53}s"></i>`
       ).join('')}`;
     return ambience;
   }
@@ -112,6 +150,7 @@
   }
 
   function refresh(date = new Date()) {
+    restoreBackdrop();
     document.querySelectorAll('.seasonal-decor').forEach(element => element.remove());
     document.querySelectorAll('.seasonal-host').forEach(element => element.classList.remove('seasonal-host'));
     document.querySelectorAll('.seasonal-header--christmas').forEach(element => element.classList.remove('seasonal-header--christmas'));
@@ -126,6 +165,7 @@
     document.documentElement.dataset.season = theme;
     host.classList.add('seasonal-host');
     host.prepend(root);
+    if (theme === 'christmas') applyChristmasBackdrop(host);
     const header = document.querySelector('body > header');
     header?.classList.add('seasonal-header--christmas');
     header?.append(createVillageAmbience());
