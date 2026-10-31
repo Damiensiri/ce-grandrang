@@ -253,18 +253,18 @@ body > header.seasonal-header--christmas > details {
 
 @media (max-width: 700px) {
   body > header.seasonal-header--christmas {
-    height: 100px;
-    padding-bottom: 28px;
+    height: 106px;
+    padding-bottom: 34px;
   }
 
   body > header.seasonal-header--christmas::before {
-    height: 36px;
-    background-size: 100% auto;
+    height: 42px;
+    background-size: 128% auto;
     opacity: .96;
   }
 
   body > header.seasonal-header--christmas::after { content: none; }
-  .seasonal-village-ambience { height: 36px; }
+  .seasonal-village-ambience { height: 42px; }
   .seasonal-village-ambience i:nth-of-type(n+7),
   .seasonal-village-smoke { display: none; }
 
