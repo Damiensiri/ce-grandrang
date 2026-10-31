@@ -1,7 +1,7 @@
 .seasonal-host{position:relative;isolation:isolate;overflow:hidden}
 .seasonal-decor{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:layout style paint;user-select:none}
 
-body>header.seasonal-header--christmas:before{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;background:url('/seasonal/christmas-header-frame.webp') center top/100% auto no-repeat;opacity:.94;-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 13px,rgba(0,0,0,.45) 24px,transparent 37px);mask-image:linear-gradient(to bottom,#000 0,#000 13px,rgba(0,0,0,.45) 24px,transparent 37px)}
+body>header.seasonal-header--christmas:before{content:"";position:absolute;z-index:0;left:0;right:0;bottom:0;height:44px;pointer-events:none;background-image:url('/seasonal/christmas-village-church.webp'),url('/seasonal/christmas-village-base.webp');background-position:27% bottom,center bottom;background-size:auto 44px,100% 15px;background-repeat:no-repeat;opacity:.98}
 body>header.seasonal-header--christmas:after{content:none}
 body>header.seasonal-header--christmas>.gr-brand,body>header.seasonal-header--christmas>nav,body>header.seasonal-header--christmas>.gr-contact,body>header.seasonal-header--christmas>details{position:relative;z-index:1}
 
@@ -19,9 +19,9 @@ body>header.seasonal-header--christmas>.gr-brand,body>header.seasonal-header--ch
 @keyframes seasonal-glow{0%,100%{opacity:.46;filter:brightness(.88)}50%{opacity:.82;filter:brightness(1.12)}}
 @keyframes seasonal-snowfall{0%{transform:translate3d(0,-16px,0);opacity:0}10%{opacity:.72}88%{opacity:.5}100%{transform:translate3d(var(--flake-drift),760px,0);opacity:0}}
 
-@media(max-width:1024px){.news.seasonal-news--christmas{background-position:82% -10px,96% 45px;background-size:50px,72px}.seasonal-bottom-garland{height:clamp(125px,18vw,175px)}}
+@media(max-width:1024px){body>header.seasonal-header--christmas:before{height:36px;background-position:25% bottom,center bottom;background-size:auto 36px,100% 13px}.news.seasonal-news--christmas{background-position:82% -10px,96% 45px;background-size:50px,72px}.seasonal-bottom-garland{height:clamp(125px,18vw,175px)}}
 
-@media(max-width:700px){body>header.seasonal-header--christmas:before{background-size:auto 96px;background-position:center top;opacity:.92;-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 10px,rgba(0,0,0,.42) 19px,transparent 32px);mask-image:linear-gradient(to bottom,#000 0,#000 10px,rgba(0,0,0,.42) 19px,transparent 32px)}.news.seasonal-news--christmas{background-position:83% 5px,101% 68%;background-size:40px,58px}.seasonal-bottom-garland{left:-2%;right:-2%;bottom:-2px;height:132px;background-size:100% 100%;opacity:.97}.seasonal-edge-lights{top:12%;bottom:21%;width:28px;opacity:.48}.seasonal-edge-lights--left{left:-9px}.seasonal-edge-lights--right{right:-9px}.seasonal-snow{display:none}.seasonal-decor--inner .seasonal-bottom-garland{height:84px}.seasonal-decor--inner .seasonal-edge-lights{display:none}}
+@media(max-width:700px){body>header.seasonal-header--christmas:before{height:30px;background-position:50% bottom,center bottom;background-size:auto 30px,100% 10px;opacity:.96}.news.seasonal-news--christmas{background-position:83% 5px,101% 68%;background-size:40px,58px}.seasonal-bottom-garland{left:-2%;right:-2%;bottom:-2px;height:132px;background-size:100% 100%;opacity:.97}.seasonal-edge-lights{top:12%;bottom:21%;width:28px;opacity:.48}.seasonal-edge-lights--left{left:-9px}.seasonal-edge-lights--right{right:-9px}.seasonal-snow{display:none}.seasonal-decor--inner .seasonal-bottom-garland{height:84px}.seasonal-decor--inner .seasonal-edge-lights{display:none}}
 
 @media(prefers-reduced-motion:reduce){.seasonal-edge-lights,.seasonal-snow i{animation:none}.seasonal-snow{display:none}}
 @media(forced-colors:active){.seasonal-decor,body>header.seasonal-header--christmas:before,body>header.seasonal-header--christmas:after{display:none}.news.seasonal-news--christmas{background-image:none}}
