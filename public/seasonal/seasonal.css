@@ -1,0 +1,309 @@
+.seasonal-host {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.seasonal-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  contain: layout style paint;
+  pointer-events: none;
+  user-select: none;
+}
+
+.seasonal-decor--christmas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 92% 42%, rgba(255,226,168,.14), transparent 36%),
+    linear-gradient(90deg, rgba(255,247,232,.11), rgba(255,240,211,.18));
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+body > header.seasonal-header--christmas {
+  height: 114px;
+  padding-bottom: 34px;
+}
+
+body > header.seasonal-header--christmas::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 56px;
+  background: url('/seasonal/christmas-village-strip-v3.png') center bottom / 100% auto no-repeat;
+  opacity: 1;
+  pointer-events: none;
+}
+
+body > header.seasonal-header--christmas::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 64px;
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0 76%, rgba(255,255,255,.9) 88%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+body > header.seasonal-header--christmas > .gr-brand,
+body > header.seasonal-header--christmas > nav,
+body > header.seasonal-header--christmas > .gr-contact,
+body > header.seasonal-header--christmas > details {
+  position: relative;
+  z-index: 1;
+}
+
+.seasonal-village-ambience {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 56px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.seasonal-village-light {
+  position: absolute;
+  left: var(--village-x);
+  bottom: var(--village-y);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff7d7;
+  box-shadow: 0 0 3px 1px #ffd77d, 0 0 10px 4px rgba(255,170,54,.34);
+  animation: seasonal-window-glow 4.6s ease-in-out var(--village-delay) infinite;
+}
+
+.seasonal-village-light--tree {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 2px 1px #ffd77d, 0 0 7px 3px rgba(255,170,54,.28);
+}
+
+.seasonal-village-light--church {
+  width: 4px;
+  height: 4px;
+  box-shadow: 0 0 4px 1px #ffe5a7, 0 0 14px 5px rgba(255,167,44,.4);
+}
+
+.seasonal-village-smoke {
+  position: absolute;
+  left: var(--village-x);
+  bottom: 30px;
+  width: 11px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(218,225,231,.46), rgba(218,225,231,0) 70%);
+  filter: blur(2px);
+  opacity: 0;
+  animation: seasonal-village-smoke 8s ease-out var(--village-delay) infinite;
+}
+
+.news.seasonal-news--christmas {
+  background-image: none;
+}
+
+.seasonal-hero-lighting {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 93% 46%, rgba(255,198,92,.28), rgba(255,174,56,.1) 24%, transparent 47%),
+    radial-gradient(ellipse at 6% 82%, rgba(255,179,69,.18), transparent 28%),
+    linear-gradient(90deg, rgba(255,211,139,.04), transparent 38%, rgba(255,212,139,.09));
+  mix-blend-mode: screen;
+  animation: seasonal-lighting-breathe 7.5s -1.8s ease-in-out infinite;
+}
+
+.seasonal-hero-frame {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: url('/seasonal/christmas-hero-frame-v4-desktop.webp') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 12px 18px rgba(0,12,22,.3));
+  transform-origin: center;
+  animation: seasonal-decor-reveal 1.35s cubic-bezier(.2,.7,.2,1) both, seasonal-frame-glow 7.2s 1.35s ease-in-out infinite;
+}
+
+.seasonal-hero-sparkles {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+}
+
+.seasonal-hero-sparkles i {
+  position: absolute;
+  top: var(--spark-y);
+  left: var(--spark-x);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff8d7;
+  box-shadow: 0 0 5px 2px #ffd47b, 0 0 15px 6px rgba(255,172,45,.3);
+  animation: seasonal-sparkle 5.8s var(--spark-delay) ease-in-out infinite;
+}
+
+.seasonal-snow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 86%, transparent 100%);
+}
+
+.seasonal-snowflake {
+  position: absolute;
+  top: -20px;
+  left: var(--flake-column);
+  width: var(--flake-size);
+  height: var(--flake-size);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.98) 0 30%, rgba(255,255,255,.58) 48%, transparent 72%);
+  animation: seasonal-snowfall var(--flake-duration) linear var(--flake-delay) infinite;
+  will-change: transform;
+}
+
+.seasonal-snowflake--back {
+  opacity: var(--flake-opacity);
+  filter: blur(.35px);
+}
+
+.seasonal-snowflake--mid {
+  opacity: var(--flake-opacity);
+  box-shadow: 0 0 4px rgba(255,255,255,.38);
+}
+
+.seasonal-snowflake--front {
+  opacity: var(--flake-opacity);
+  filter: blur(1.6px);
+  box-shadow: 0 0 7px rgba(255,255,255,.48);
+}
+
+.seasonal-decor--inner .seasonal-hero-frame { opacity: .88; }
+
+@keyframes seasonal-decor-reveal {
+  from { opacity: 0; transform: scale(.985); }
+  to { opacity: .97; transform: scale(1); }
+}
+
+@keyframes seasonal-frame-glow {
+  0%, 100% { filter: drop-shadow(0 12px 18px rgba(0,12,22,.3)) brightness(.96); }
+  52% { filter: drop-shadow(0 12px 21px rgba(255,174,52,.18)) brightness(1.055); }
+}
+
+@keyframes seasonal-lighting-breathe {
+  0%, 100% { opacity: .68; }
+  48% { opacity: 1; }
+}
+
+@keyframes seasonal-sparkle {
+  0%, 72%, 100% { opacity: 0; transform: scale(.45); }
+  78% { opacity: .9; transform: scale(1.15); }
+  84% { opacity: .18; transform: scale(.7); }
+}
+
+@keyframes seasonal-window-glow {
+  0%, 100% { opacity: .42; transform: scale(.85); }
+  38% { opacity: .95; transform: scale(1.12); }
+  63% { opacity: .58; transform: scale(.94); }
+}
+
+@keyframes seasonal-village-smoke {
+  0%, 18% { opacity: 0; transform: translate3d(0, 3px, 0) scale(.7); }
+  35% { opacity: .28; }
+  100% { opacity: 0; transform: translate3d(8px, -23px, 0) scale(1.45); }
+}
+
+@keyframes seasonal-snowfall {
+  0% { transform: translate3d(0, -18px, 0) scale(.86); opacity: 0; }
+  9% { opacity: var(--flake-opacity); }
+  46% { transform: translate3d(calc(var(--flake-drift) * -.35), 355px, 0) scale(1); }
+  88% { opacity: var(--flake-opacity); }
+  100% { transform: translate3d(var(--flake-drift), 780px, 0) scale(.92); opacity: 0; }
+}
+
+@media (max-width: 1024px) {
+  body > header.seasonal-header--christmas {
+    height: 108px;
+    padding-bottom: 28px;
+  }
+
+  body > header.seasonal-header--christmas::before {
+    height: 52px;
+    background-size: 100% auto;
+  }
+
+  .seasonal-village-ambience { height: 52px; }
+  .seasonal-village-smoke { bottom: 28px; transform: scale(.72); }
+
+  .seasonal-hero-frame { background-size: 106% 100%; }
+}
+
+@media (max-width: 700px) {
+  body > header.seasonal-header--christmas {
+    height: 106px;
+    padding-bottom: 34px;
+  }
+
+  body > header.seasonal-header--christmas::before {
+    height: 42px;
+    background-size: 128% auto;
+    opacity: .96;
+  }
+
+  body > header.seasonal-header--christmas::after { content: none; }
+  .seasonal-village-ambience { height: 42px; }
+  .seasonal-village-ambience i:nth-of-type(n+7),
+  .seasonal-village-smoke { display: none; }
+
+  .seasonal-hero-frame {
+    background-image: url('/seasonal/christmas-hero-frame-v4-mobile.webp');
+    background-size: 125% 100%;
+    filter: drop-shadow(0 8px 13px rgba(0,12,22,.24));
+  }
+
+  .seasonal-hero-lighting {
+    background:
+      radial-gradient(ellipse at 94% 46%, rgba(255,195,85,.2), transparent 34%),
+      radial-gradient(ellipse at 5% 80%, rgba(255,182,66,.12), transparent 26%);
+  }
+
+  .seasonal-hero-sparkles i:nth-child(n+3) { display: none; }
+  .seasonal-snowflake:not(.seasonal-snowflake--mobile-safe) { display: none; }
+  .seasonal-snowflake--front { filter: blur(1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seasonal-hero-frame,
+  .seasonal-hero-lighting,
+  .seasonal-hero-sparkles i,
+  .seasonal-village-light {
+    animation: none;
+  }
+
+  .seasonal-village-smoke,
+  .seasonal-snow { display: none; }
+}
+
+@media (forced-colors: active) {
+  .seasonal-decor,
+  .seasonal-village-ambience,
+  body > header.seasonal-header--christmas::before,
+  body > header.seasonal-header--christmas::after {
+    display: none;
+  }
+
+  .news.seasonal-news--christmas { background-image: none; }
+}
