@@ -1,0 +1,139 @@
+#display.display-seasonal--christmas {
+  isolation: isolate;
+}
+
+.display-seasonal-decor {
+  position: absolute;
+  z-index: 50;
+  inset: 0;
+  overflow: hidden;
+  contain: layout style paint;
+  pointer-events: none;
+  user-select: none;
+}
+
+.display-seasonal-frame {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  filter: drop-shadow(0 12px 18px rgba(0,12,22,.3));
+  transform-origin: center;
+  animation: display-seasonal-reveal 1.35s cubic-bezier(.2,.7,.2,1) both,
+    display-seasonal-glow 7.2s 1.35s ease-in-out infinite;
+}
+
+.display-seasonal-frame-part {
+  position: absolute;
+  background-image: url('/seasonal/christmas-hero-frame-v4-desktop.webp');
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+}
+
+/* Quatre angles fondus : aucune bordure verticale continue sur les côtés. */
+.display-seasonal-frame-part--top-left,
+.display-seasonal-frame-part--top-right {
+  top: 0;
+  height: 34%;
+}
+
+.display-seasonal-frame-part--top-left {
+  left: 0;
+  width: 16%;
+  background-position: left top;
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at top left, #000 0 28%, rgba(0,0,0,.8) 43%, transparent 74%);
+  mask-image: radial-gradient(ellipse 100% 100% at top left, #000 0 28%, rgba(0,0,0,.8) 43%, transparent 74%);
+}
+
+.display-seasonal-frame-part--top-right {
+  right: 0;
+  width: 25%;
+  background-position: right top;
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at top right, #000 0 30%, rgba(0,0,0,.84) 46%, transparent 76%);
+  mask-image: radial-gradient(ellipse 100% 100% at top right, #000 0 30%, rgba(0,0,0,.84) 46%, transparent 76%);
+}
+
+.display-seasonal-frame-part--bottom-left,
+.display-seasonal-frame-part--bottom-right {
+  bottom: 0;
+  height: 44%;
+}
+
+.display-seasonal-frame-part--bottom-left {
+  left: 0;
+  width: 24%;
+  background-position: left bottom;
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at bottom left, #000 0 29%, rgba(0,0,0,.84) 45%, transparent 75%);
+  mask-image: radial-gradient(ellipse 100% 100% at bottom left, #000 0 29%, rgba(0,0,0,.84) 45%, transparent 75%);
+}
+
+.display-seasonal-frame-part--bottom-right {
+  right: 0;
+  width: 21%;
+  background-position: right bottom;
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at bottom right, #000 0 28%, rgba(0,0,0,.82) 44%, transparent 74%);
+  mask-image: radial-gradient(ellipse 100% 100% at bottom right, #000 0 28%, rgba(0,0,0,.82) 44%, transparent 74%);
+}
+
+.display-seasonal-snow {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 5%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 5%, #000 94%, transparent 100%);
+}
+
+.display-seasonal-snowflake {
+  position: absolute;
+  top: -3vh;
+  left: var(--display-flake-column);
+  width: var(--display-flake-size);
+  height: var(--display-flake-size);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.98) 0 30%, rgba(255,255,255,.58) 48%, transparent 72%);
+  opacity: var(--display-flake-opacity);
+  box-shadow: 0 0 6px 1px rgba(255,255,255,.52);
+  animation: display-seasonal-snowfall var(--display-flake-duration) linear var(--display-flake-delay) infinite;
+  will-change: transform;
+}
+
+.display-seasonal-snowflake--back { filter: blur(.35px); }
+.display-seasonal-snowflake--front {
+  filter: blur(1.2px);
+  box-shadow: 0 0 9px 2px rgba(255,255,255,.58);
+}
+
+@keyframes display-seasonal-reveal {
+  from { opacity: 0; transform: scale(.985); }
+  to { opacity: .98; transform: scale(1); }
+}
+
+@keyframes display-seasonal-glow {
+  0%, 100% { filter: drop-shadow(0 12px 18px rgba(0,12,22,.3)) brightness(.96); }
+  52% { filter: drop-shadow(0 12px 22px rgba(255,174,52,.2)) brightness(1.055); }
+}
+
+@keyframes display-seasonal-snowfall {
+  0% { transform: translate3d(0,-4vh,0) scale(.86); opacity: 0; }
+  8% { opacity: var(--display-flake-opacity); }
+  48% { transform: translate3d(calc(var(--display-flake-drift) * -.35),52vh,0) scale(1); }
+  90% { opacity: var(--display-flake-opacity); }
+  100% { transform: translate3d(var(--display-flake-drift),108vh,0) scale(.92); opacity: 0; }
+}
+
+@media (orientation: portrait) {
+  .display-seasonal-frame {
+    background: url('/seasonal/christmas-hero-frame-v4-mobile.webp') center / 116% 100% no-repeat;
+  }
+
+  .display-seasonal-frame-part { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .display-seasonal-frame { animation: none; }
+  .display-seasonal-snow { display: none; }
+}
+
+@media (forced-colors: active) {
+  .display-seasonal-decor { display: none; }
+}

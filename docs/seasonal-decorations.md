@@ -1,6 +1,6 @@
 # Décorations saisonnières
 
-Le moteur est chargé uniquement par l'accueil et les pages vitrines publiques. Les pages de pré-inscription, de confirmation, d'administration et l'écran dynamique ne le chargent pas.
+Le moteur principal est chargé uniquement par l'accueil et les pages vitrines publiques. Les pages de pré-inscription, de confirmation et d'administration ne le chargent pas. L'écran dynamique possède un renderer saisonnier séparé afin de suivre le même calendrier sans modifier sa playlist ni ses transitions.
 
 ## Administration
 
@@ -26,6 +26,12 @@ L'ajout de `?season=christmas` à une URL force Noël dans l'onglet courant. Le 
 - `?season=auto` efface la prévisualisation et rétablit le calendrier configuré.
 
 Ces paramètres n'écrivent ni dans D1 ni dans R2 et ne modifient aucun compte utilisateur.
+
+## Écran dynamique
+
+`/display` lit les mêmes clés `seasonal.*` que le site et actualise leur état toutes les 60 secondes, ainsi qu'au retour de l'écran au premier plan. Quand Noël est actif, une couche dédiée ajoute quatre compositions d'angle aux contours fondus, avec les branches et la lanterne, ainsi qu'une neige renforcée au-dessus des slides. Il n'existe aucune bordure verticale continue et le village de l'en-tête n'est jamais chargé sur cet écran.
+
+La couche est inerte, sans événement de pointeur et indépendante du moteur de playlist. Elle reste en place pendant les transitions, disparaît dès que le thème est désactivé et respecte `prefers-reduced-motion` en supprimant la neige.
 
 ## Intégration visuelle
 
